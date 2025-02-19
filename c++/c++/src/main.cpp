@@ -720,7 +720,151 @@
 //2025.2.18
 //1.成员初始化列表：
 //成员初始化列表：是 C++ 构造函数的一种特殊语法，用于在构造函数体执行之前初始化类的成员变量
-//它通过在构造函数的参数列表后使用冒号（ : ）和括号（()）来实现，成员1（值1），成员2（值2）...
+//它通过在构造函数的参数列表后使用冒号（ : ）和括号（()）来实现，
+//成员1（值1），成员2（值2）... 必须按照变量的顺序一一赋值
 //对于常量成员（const）和引用型成员（&）必须使用成员初始化列表
 
 
+//1>初始化成员的不同方法：
+//#include<iostream>
+//#include<string>
+//
+//class Entity
+//{
+//public:
+//    std::string m_name;
+//    int height;
+//
+//    /*Entity()
+//    {
+//        m_name = "Unknown";
+//    }*/
+//    Entity() : m_name("Unknown"), height(158)  //有顺序（虽然VS下好像不影响）
+//    {
+//        ;//使构造函数的层次鲜明，便于阅读
+//    }
+//
+//    std::string GetName()
+//    {
+//        return m_name;
+//    }
+//};
+//
+//int main()
+//{
+//    Entity e;
+//    std::cout << e.GetName() << std::endl;
+//    return 0;
+//}
+
+
+//2>优化性能：只初始化一次--》建议到处都用成员初始化列表
+//#include<iostream>
+//#include<string>
+//
+//class Example
+//{
+//public:
+//    Example()
+//    {
+//        std::cout << "Created the Entity" << std::endl;
+//    }
+//    Example(int x)
+//    {
+//        std::cout << "Created the Entity with " << x << std::endl;
+//    }
+//};
+//
+//class Entity
+//{
+//public:
+//    std::string m_name;
+//    Example example;
+//
+//    /*Entity() 
+//    {
+//        m_name = "Unknown";
+//        example = Example(8);
+//    }*/
+//    Entity()
+//        :m_name("Unknown"), example(Example(8)) { }
+//};
+//
+//int main()
+//{
+//    Entity e;
+//    return 0;
+//}
+
+
+//2.19
+//1.三元运算符：（嵌套）
+//#include<iostream>
+//int main()
+//{
+//    int level = 9;
+//    int speed;
+//    speed = level > 5 ? level > 10 ? 15 : 10 : 5;
+//    //speed = level > 10 ?/*(*/ level > 5 ? 15 : 10/*)*/ : 5;
+//    std::cout << speed << std::endl;
+//    return 0;
+//}
+
+
+//2.创建并初始化c++对象：
+//1>在栈上：
+//#include<iostream>
+//#include<string>
+//using string = std::string;
+//class Entity
+//{
+//public:
+//    string m_name;
+//
+//    Entity(const string& name)
+//    {
+//        m_name = name;
+//    }
+//
+//    const string& GetName() const
+//    {
+//        return m_name;
+//    }
+//};
+//int main()
+//{
+//    Entity e("lyl");
+//    std::cout << e.GetName() << std::endl;
+//    return 0;
+//}
+
+//2>在堆上（对象占内存大，需要显式控制对象生命周期）：
+//#include<iostream>
+//#include<string>
+//using string = std::string;
+//class Entity
+//{
+//public:
+//    string m_name;
+//
+//    Entity(const string& name)
+//    {
+//        m_name = name;
+//    }
+//
+//    const string& GetName() const
+//    {
+//        return m_name;
+//    }
+//};
+//int main()
+//{
+//    Entity* e = new Entity("lyl");
+//    std::cout << e->GetName() << std::endl;
+//    delete e;
+//    return 0;
+//}
+
+
+//2.20
+//1.new关键字：
