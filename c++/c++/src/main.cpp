@@ -644,6 +644,8 @@
 
 
 //4.字符串字面量(字符串常量):
+//****字符串字面量（例如"chnero"）被认为是一个 字符数组，而不是 std::string
+
 //char* p = "hello";  p是一个指针，直接指向常量区，修改p[0]就是修改常量区的内容，这是不允许的。
 //char p[] = "hello"; // 编译器在栈上创建一个字符串p，把"hello"从常量区复制到p，修改p[0]就相当于修改数组元素一样，是可以的。
 
@@ -868,3 +870,127 @@
 
 //2.20
 //1.new关键字：
+//#include<iostream>
+//class Entity
+//{
+//public:
+//    std::string m_name;
+//
+//    Entity(const std::string& name)
+//    {
+//        m_name = name;
+//    }
+//
+//    const std::string& GetName() const
+//    {
+//        return m_name;
+//    }
+//};
+//int main()
+//{
+//    Entity* e = new Entity("lyl");
+//    //相当于：Entity* e=(Entity*)malloc(sizeof(Entity)) + 调用构造函数
+//    
+//    int* a = new int;
+//    int* b = new int[100];
+//
+//    delete e;
+//    delete a;
+//    delete[] b;  //特定形式
+//    return 0;
+//}
+
+
+//2.c++的隐式转换（构造函数）和explicit关键字：
+//c++允许编译器对代码进行【一次】隐式转换
+//explicit用于修饰构造函数，表明禁用隐式转换
+
+//#include<iostream>
+//class Entity
+//{
+//public:
+//    std::string m_name;
+//    int m_age;
+//
+//    explicit Entity(const std::string& name):m_name(name),m_age(-1){}
+//
+//    explicit Entity(int age) :m_name("Unknown"), m_age(age){}
+//
+//};
+//
+////非常量引用：传入的必须是左值（可修改）
+////常量引用（const）：传入的可以是左，右值（不可修改） -->代表引用的值不能更改
+//void print(const Entity& Entity)
+//{
+//    ;
+//}
+//
+//int main()
+//{
+//    Entity a("lyl"); //一次隐式转换：转换为std::string
+//    Entity a = Entity("lyl");
+//    //隐式转换：
+//    Entity a = "lyl";  //两次隐式转换（不允许）：一次转换为std::string,一次转换为Entity
+//    print(Entity("lyl"));
+//
+//    Entity b(20);
+//    Entity b = Entity(20);
+//    //隐式转换：
+//    Entity b = 20;  //一次隐式转换：转换为Entity
+//    print(20);
+//    return 0;
+//}
+
+
+//3.运算符及其重载：
+//运算符的重载其实是一个函数
+
+//1>+/*的重载：
+#include<iostream>
+int main()
+{
+
+    return 0;
+}
+
+//2><<的重载：
+
+//3>==的重载：
+
+
+
+//4.this关键字：
+//this是一个指向当前对象实例的指针
+
+//#include<iostream>
+//void PrintEntity(Entity* e);
+//
+//class Entity
+//{
+//public:
+//    int x;
+//    int y;
+//
+//    Entity(int x, int y)
+//    {
+//        //x = x;
+//        //变量名相同，无法给x,y赋值
+//        this->x = x;
+//        this->y = y;
+//
+//        //在类中调用类外的函数，且以类为参数
+//        PrintEntity(this);
+//    }
+//};
+//
+//void PrintEntity(Entity* e)
+//{
+//    //print
+//}
+//
+//int main()
+//{
+//    Entity e(2, 3);
+//    return 0;
+//}
+
