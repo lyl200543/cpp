@@ -945,17 +945,113 @@
 //3.运算符及其重载：
 //运算符的重载其实是一个函数
 
-//1>+/*的重载：
-#include<iostream>
-int main()
-{
-
-    return 0;
-}
+//1>+/*的重载：简化代码，易于理解
+//#include<iostream>
+//struct Vector
+//{
+//    float x, y;
+//
+//    Vector(float x, float y):x(x),y(y){}
+//
+//    Vector add(const Vector& other) const
+//    {
+//        return Vector(x + other.x, y + other.y);
+//    }
+//
+//    //成员函数重载：
+//    //左侧操作数是调用该函数的对象，而右侧操作数是函数的参数
+//    Vector operator+(const Vector& other) const
+//    {
+//        return add(other);
+//    }
+//
+//    Vector mutiple(const Vector& other) const
+//    {
+//        return Vector(x * other.x, y * other.y);
+//    }
+//
+//    Vector operator*(const Vector& other) const
+//    {
+//        return mutiple(other);
+//    }
+//};
+//
+//int main()
+//{
+//    Vector position = Vector(1.0f, 1.0f);
+//    Vector speed = Vector(4.0f, 4.0f);
+//    Vector powerup = Vector(1.1f, 1.1f);
+//
+//    Vector result = position.add(speed.mutiple(powerup));
+//    Vector result = position + speed * powerup; //运算符重载后优先级保持不变
+//
+//    return 0;
+//}
 
 //2><<的重载：
+//默认情况下，std::ostream(如：std::cout)只能输出基本类型
+//如果想要自定义的类能直接输出，就需要重载<<
 
-//3>==的重载：
+//#include<iostream>
+//
+//class Entity
+//{
+//public:
+//    int x;
+//    int y;
+//
+//    Entity(int x,int y):x(x),y(y){}
+//
+//};
+//
+////非成员函数重载：
+////两个操作数都作为参数
+//std::ostream& operator<<(std::ostream& stream, Entity e)
+//{
+//    stream << "(" << e.x << "," << e.y << ")";
+//    return stream;
+//}
+//
+//int main()
+//{
+//    Entity e(2, 3);
+//    std::cout << e << std::endl;
+//    return 0;
+//}
+
+
+//3>==的重载：判断自定义类的对象是否相等
+//#include<iostream>
+//
+//class Entity
+//{
+//public:
+//    int x;
+//    int y;
+//
+//    Entity(int x, int y) :x(x), y(y) {}
+//
+//    bool operator==(const Entity& other) const
+//    {
+//        return x == other.x && y == other.y;
+//    }
+//
+//    bool operator!=(const Entity& other) const
+//    {
+//        return !(*this == other);
+//    }
+//};
+//
+//int main()
+//{
+//    Entity e1(2, 3);
+//    Entity e2(2, 4);
+//    if (e1 == e2)
+//    {
+//        std::cout << "==" << std::endl;
+//    }
+//    return 0;
+//}
 
 
 
@@ -994,3 +1090,46 @@ int main()
 //    return 0;
 //}
 
+
+//2.21
+//1.栈作用域生存期：
+//#include<iostream>
+//
+//class Entity
+//{
+//public:
+//    Entity()
+//    {
+//        std::cout << "Created the Entity!" << std::endl;
+//    }
+//    ~Entity()
+//    {
+//        std::cout << "Destroyed the Entity!" << std::endl;
+//    }
+//};
+//
+////作用域指针（unique_ptr）
+//class ScopedPtr
+//{
+//private:
+//    Entity* m_ptr;
+//public:
+//    ScopedPtr(Entity* ptr):m_ptr(ptr){}
+//    ~ScopedPtr()
+//    {
+//        delete m_ptr;
+//    }
+//};
+//
+//int main()
+//{
+//    {
+//        ScopedPtr e = new Entity;  //隐式转换
+//        //Entity* e = new Entity;
+//    }
+//    return 0;
+//}
+
+
+//2.22
+//1.智能指针：
