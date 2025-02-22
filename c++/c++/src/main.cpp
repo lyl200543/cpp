@@ -1132,4 +1132,113 @@
 
 
 //2.22
-//1.智能指针：
+//1.智能指针：自动化管理内存（自动化实现new,delete）
+//     ->头文件：#include<memory>
+
+//1>unique_ptr:
+//作用域指针，出了作用域自动清除内存
+//独占所有权的智能指针，它保证同一时间内只有一个unique_ptr可以管理一个对象
+//它不能被复制，但可以被移动
+
+//#include<iostream>
+//#include<memory>
+//
+//class Entity
+//{
+//public:
+//    Entity()
+//    {
+//        std::cout << "Created the Entity!" << std::endl;
+//    }
+//    ~Entity()
+//    {
+//        std::cout << "Destroyed the Entity!" << std::endl;
+//    }
+//};
+//
+//int main()
+//{
+//    {
+//        //std::unique_ptr<Entity> e(new Entity());
+//        std::unique_ptr<Entity> e = std::make_unique<Entity>();
+//        //转移：
+//        std::unique_ptr<Entity> e1 = std::move(e);
+//    }
+//    //动态内存分配
+//    std::unique_ptr<int> a = std::make_unique<int>(30);
+//    std::cout << *a << std::endl;
+//    return 0;
+//}
+
+//2>shared_ptr:
+//共享所有权的智能指针,允许多个shared_ptr实例共享同一个对象
+//它通过引用计数来管理对象的生命周期
+//有几个指针引用计数就为几，当引用计数为0时，内存被清除
+
+//#include<iostream>
+//#include<memory>
+//
+//class Entity
+//{
+//public:
+//    Entity()
+//    {
+//        std::cout << "Created the Entity!" << std::endl;
+//    }
+//    ~Entity()
+//    {
+//        std::cout << "Destroyed the Entity!" << std::endl;
+//    }
+//};
+//
+//int main()
+//{
+//    {
+//        std::shared_ptr<Entity> e0;
+//        {
+//            std::shared_ptr<Entity> e1 = std::make_shared<Entity>();
+//            e0 = e1;
+//        }
+//    }
+//
+//    return 0;
+//}
+
+//3>weak_ptr:
+//弱引用指针，它允许一个对象在不增加引用计数的情况下被访问
+//它通常用于打破shared_ptr之间的循环引用
+
+//#include<iostream>
+//#include<memory>
+//
+//class Entity
+//{
+//public:
+//    Entity()
+//    {
+//        std::cout << "Created the Entity!" << std::endl;
+//    }
+//    ~Entity()
+//    {
+//        std::cout << "Destroyed the Entity!" << std::endl;
+//    }
+//};
+//
+//int main()
+//{
+//    {
+//        std::weak_ptr<Entity> e0;
+//        {
+//            std::shared_ptr<Entity> e1 = std::make_shared<Entity>();
+//            e0 = e1;
+//        }
+//        //检查对象是否存在：
+//        std::cout << e0.lock() << std::endl;
+//    }
+//    return 0;
+//}
+
+
+
+//2.22
+//1.复制与拷贝构造函数：
