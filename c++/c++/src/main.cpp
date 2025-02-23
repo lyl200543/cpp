@@ -1242,3 +1242,140 @@
 
 //2.22
 //1.复制与拷贝构造函数：
+//#include<iostream>
+//#include<string>
+//
+//class String
+//{
+//private:
+//    char* m_buffer;
+//    unsigned int m_size;
+//public:
+//    String(const char* string)
+//    {
+//        m_size = strlen(string);
+//        m_buffer = new char[m_size + 1];
+//        memcpy(m_buffer, string, m_size);
+//        m_buffer[m_size] = '\0';
+//    }
+//    //拷贝构造函数：
+//    //拷贝构造函数是一种构造函数，它的参数是一个同类型的对象的引用（通常是const引用）
+//    //它的作用是创建一个新对象，该对象是另一个对象的副本
+//    //它在类对象被拷贝时调用
+//
+//    //1>默认拷贝构造函数：-->浅拷贝
+//    //拷贝指针变量时，两个对象指向同一个内存块
+//
+//    /*String(const String& other)
+//    {
+//        m_buffer = other.m_buffer;
+//        m_size = other.m_size;
+//    }*/
+//
+//    //2>自定义拷贝构造函数：-->深拷贝
+//    //拷贝指针变量时，两个对象指向不同内存块
+//
+//    String(const String& other)/* = delete;*/  //删除拷贝构造函数：不能拷贝类对象
+//    {
+//        std::cout << "Coped the String!" << std::endl;
+//        m_size = other.m_size;
+//        m_buffer = new char[m_size + 1];
+//        memcpy(m_buffer, other.m_buffer, m_size + 1);
+//    }
+//
+//    ~String()
+//    {
+//        //不能重复释放-->导致未定义行为
+//        //浅拷贝（包含指针变量）时，易出现重复释放
+//        delete[] m_buffer;
+//    }
+//    //友元函数：
+//    //它不是类的成员函数，但可以访问类的私有（private）和保护（protected）成员
+//    //格式：friend 返回类型 函数名(参数列表);
+//    //定义可以写在类外（通常），也可以写在类内
+//    //友元函数通常用于实现那些需要直接访问类内部数据的非成员函数，或者用于重载运算符等场景
+//    friend std::ostream& operator<< (std::ostream& stream, const String& string);
+//
+//    char& operator[](const int& n)
+//    {
+//        return m_buffer[n];
+//    }
+//};
+//
+//std::ostream& operator<< (std::ostream& stream, const String& string)
+//{
+//    stream << string.m_buffer;
+//    return stream;
+//}
+//
+////如果String不加&，每次调用PrintString都会复制一次类对象（形参是实参的一份拷贝）
+////这里出现过报错：想要使用重载运算符，参数类型必须一样
+////一开始<<的函数参数无const,但PrintString的参数有const）
+//void PrintString(const String& string)
+//{
+//    std::cout << string << std::endl;
+//}
+//
+//int main()
+//{
+//    String string = "cherno";
+//    String second = string; 
+//
+//    second[2] = 'a';
+//
+//    PrintString(string);
+//    PrintString(second);
+//
+//    std::cin.get();
+//    return 0;
+//}  //浅拷贝时，作用域结束，string,second释放，char*指向的空间被释放两次-->程序崩溃
+//
+////总结：总是使用const & 传递  -->避免不必要的复制，浪费性能
+
+
+
+//2.箭头操作符(->):
+//1>
+//#include<iostream>
+//#include<string>
+//
+//class Entity
+//{
+//public:
+//    int x;
+//    void Print() const
+//    {
+//        std::cout << "hello!" << std::endl;
+//    }
+//};
+//
+//class ScopedPtr
+//{
+//public:
+//    Entity* entity;
+//    ScopedPtr(Entity* e) :entity(e){}
+//    ~ScopedPtr()
+//    {
+//        delete entity;
+//    }
+//
+//    const Entity* operator->() const 
+//    {
+//        return entity;
+//    }
+//};
+//
+//int main()
+//{
+//    const ScopedPtr ptr = new Entity;
+//    //ptr.entity->Print();
+//    ptr->Print();
+//
+//    std::cin.get();
+//    return 0;
+//}
+
+
+//2>
+
+
