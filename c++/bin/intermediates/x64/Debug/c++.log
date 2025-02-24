@@ -1,2 +1,67 @@
 ﻿  main.cpp
-  c++.vcxproj -> D:\vs\c++\bin\x64\Debug\c++.exe
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.42.34433\include\xmemory(700,103): warning C4244: “参数”: 从“_Ty”转换到“float”，可能丢失数据
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.42.34433\include\xmemory(700,103): warning C4244:         with
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.42.34433\include\xmemory(700,103): warning C4244:         [
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.42.34433\include\xmemory(700,103): warning C4244:             _Ty=int
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.42.34433\include\xmemory(700,103): warning C4244:         ]
+  (编译源文件“src/main.cpp”)
+      C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.42.34433\include\xmemory(700,103):
+      模板实例化上下文(最早的实例化上下文)为
+          D:\vs\c++\c++\src\main.cpp(1477,14):
+          查看对正在编译的函数 模板 实例化“void std::vector<Vextex,std::allocator<Vextex>>::emplace_back<int,int,int>(int &&,int &&,int &&)”的引用
+          C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.42.34433\include\vector(858,24):
+          查看对正在编译的函数 模板 实例化“_Ty &std::vector<_Ty,std::allocator<_Ty>>::_Emplace_one_at_back<int,int,int>(int &&,int &&,int &&)”的引用
+          with
+          [
+              _Ty=Vextex
+          ]
+          C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.42.34433\include\vector(776,20):
+          查看对正在编译的函数 模板 实例化“_Ty &std::vector<_Ty,std::allocator<_Ty>>::_Emplace_back_with_unused_capacity<int,int,int>(int &&,int &&,int &&)”的引用
+          with
+          [
+              _Ty=Vextex
+          ]
+          C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.42.34433\include\vector(794,27):
+          查看对正在编译的函数 模板 实例化“void std::_Default_allocator_traits<_Alloc>::construct<_Ty,int,int,int>(_Alloc &,_Objty *const ,int &&,int &&,int &&)”的引用
+          with
+          [
+              _Alloc=std::allocator<Vextex>,
+              _Ty=Vextex,
+              _Objty=Vextex
+          ]
+  
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.42.34433\include\xmemory(700,82): error C2512: “Vextex::Vextex”: 没有合适的默认构造函数可用
+  (编译源文件“src/main.cpp”)
+      C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.42.34433\include\xmemory(700,82):
+      尝试匹配参数列表“()”时
+      C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.42.34433\include\xmemory(700,82):
+      模板实例化上下文(最早的实例化上下文)为
+          D:\vs\c++\c++\src\main.cpp(1473,25):
+          查看对正在编译的 类 模板 实例化“std::vector<Vextex,std::allocator<Vextex>>”的引用
+          C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.42.34433\include\vector(609,5):
+          在编译 类 模板 成员函数“std::vector<Vextex,std::allocator<Vextex>>::vector(const unsigned __int64,const _Alloc &)”时
+          with
+          [
+              _Alloc=std::allocator<Vextex>
+          ]
+              D:\vs\c++\c++\src\main.cpp(1473,33):
+              请参阅 "main" 中对 "std::vector<Vextex,std::allocator<Vextex>>::vector" 的第一个引用
+          C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.42.34433\include\vector(611,9):
+          查看对正在编译的函数 模板 实例化“void std::vector<Vextex,std::allocator<Vextex>>::_Construct_n<>(const unsigned __int64)”的引用
+          C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.42.34433\include\vector(2072,41):
+          查看对正在编译的函数 模板 实例化“Vextex *std::_Uninitialized_value_construct_n<std::allocator<Vextex>>(Vextex *,unsigned __int64,_Alloc &)”的引用
+          with
+          [
+              _Alloc=std::allocator<Vextex>
+          ]
+          C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.42.34433\include\xmemory(2018,18):
+          查看对正在编译的函数 模板 实例化“void std::_Uninitialized_backout_al<std::allocator<Vextex>>::_Emplace_back<>(void)”的引用
+          C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.42.34433\include\xmemory(1779,35):
+          查看对正在编译的函数 模板 实例化“void std::_Default_allocator_traits<_Alloc>::construct<_Ty,>(_Alloc &,_Objty *const )”的引用
+          with
+          [
+              _Alloc=std::allocator<Vextex>,
+              _Ty=Vextex,
+              _Objty=Vextex
+          ]
+  

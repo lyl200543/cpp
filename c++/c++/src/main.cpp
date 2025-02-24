@@ -1376,6 +1376,123 @@
 //}
 
 
-//2>
+//2>计算偏移量：
+//#include<iostream>
+//struct Vector3
+//{
+//    float x, y, z;  //偏移量：0，4，8
+//};
+//
+//int main()
+//{
+//    int setoff = (int)&((Vector3*)0)->y;
+//    //setoff = (int)(((Vector3*)0) + 1);
+//    std::cout << setoff << std::endl;
+//    return 0;
+//}
+
+
+//2.24
+//1.动态数组（std::vector）
+//#include<iostream>
+//#include<vector>  //头文件
+//
+//class Vertex
+//{
+//public:
+//    int x, y, z;
+//};
+//
+//std::ostream& operator<< (std::ostream& stream, Vertex& v)
+//{
+//    stream << v.x << ',' << v.y << ',' << v.z;
+//    return stream;
+//}
+//
+//int main()
+//{
+//    std::vector<Vertex> vertices;
+//    //push_back()添加对象
+//    vertices.push_back({ 1,2,3 });
+//    vertices.push_back({ 4,5,6 });
+//    
+//    //size()获取数组大小
+//    for (int i = 0; i < vertices.size(); i++)
+//    {
+//        std::cout << vertices[i] << std::endl;
+//    }
+//
+//    //删除元素
+//    //vertices.clear();  //全部删除
+//    vertices.erase(vertices.begin() + 1);  //删除某个元素
+//
+//    //这是一个范围-based for循环，是 C++11 引入的一种简化遍历容器的方式
+//    //它的作用是遍历 vertices 中的每一个元素，并将每个元素赋值给变量 v，然后在循环体中处理 v
+//    //这里 v 是 Vertex 的一个副本，每次迭代都会发生一次拷贝，为了避免拷贝，可以使用引用
+//    //格式：类型 变量名：范围表达式
+//    for (Vertex& v : vertices)
+//    {
+//        std::cout << v << std::endl;
+//    }
+//
+//
+//    std::cin.get();
+//    return 0;
+//}
+
+
+//2.动态数组的优化：
+//#include<iostream>
+//#include<vector>
+//
+//class Vextex
+//{
+//public:
+//    float x, y, z;
+//
+//    Vextex(float x, float y, float z) :x(x), y(y), z(z) {}
+//    Vextex(const Vextex& other) :x(other.x), y(other.y), z(other.z)
+//    {
+//        std::cout << "Copied the Vextex" << std::endl;
+//    }
+//};
+//
+//int main()
+//{
+//    //一共复制了六次
+//    //1>每次在main函数中创建Vextex对象，然后复制到vector中
+//    //2>vector的初始容量为1，不够时会扩容（容量+1）
+//    //  扩容是把原来内存中的内容复制到新内存中，并删除原来的内存，原来有几个元素就要复制几次
+//    //std::vector<Vextex> vextices;
+//    //vextices.push_back(Vextex(1, 2, 3));  //复制1次
+//    //vextices.push_back(Vextex(4, 5, 6));  //复制2次
+//    //vextices.push_back(Vextex(7, 8, 9));  //复制3次
+//
+//
+//    //优化：复制0次
+//    std::vector<Vextex> vextices;
+//    //提前设置好内存：
+//    vextices.reserve(3);
+//    //使用emplace_back():
+//    //1>push_back() 是一个成员函数，用于将一个【已存在的对象】添加到容器的末尾
+//    //它接受一个完整的对象作为参数
+//    //首先，它会创建一个临时对象（通常是通过拷贝或移动构造函数）
+//    //然后，将这个临时对象拷贝或移动到容器的末尾
+//    //最后，临时对象被销毁
+//    // 
+//    //2>emplace_back() 是C++11引入的成员函数，它的目标是在容器的末尾直接构造对象
+//    //从而避免不必要的临时对象创建和拷贝 / 移动操作
+//    //它接受构造函数的参数，并直接在容器分配的内存位置上构造对象。
+//    vextices.emplace_back(1, 2, 3); 
+//    vextices.emplace_back(4, 5, 6);  
+//    vextices.emplace_back(7, 8, 9);  
+//    std::cin.get();
+//    return 0;
+//}
+
+
+
+//2.25
+//1.
 
 
