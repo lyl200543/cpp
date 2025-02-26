@@ -1492,16 +1492,119 @@
 
 
 
-//2.26
-// 
-// 
-// 
+//2.25（未完成）
 //1.使用库（静态链接）：
-
 
 
 //2.使用动态库：
 
 
+//3.创建和使用库：
 
+
+
+//2.26
+//1.处理多返回值：
+//  1>参数使用引用传递/指针：-->弊端：需要提前定义好变量
+//  2>使用数组（std::array/std::vector）：-->弊端：数据类型必须一致
+
+//  3>tuple元组/pair： -->弊端：使用返回值时容易混淆（没有变量名提示）-->结构化绑定
+//#include<iostream>
+//#include<tuple>  //包含tuple的定义
+//#include<utility>  //包含pair的定义
+//#include<iomanip> //包含fixed和setprecision
+
+
+//tuple可以包含多个不同类型的数据
+//std::tuple<int,double> Square(int a, double b)
+//{
+//    int x = a * a;
+//    double y = b * b;
+//    return std::make_tuple(x, y);
+//}
+//
+//int main()
+//{
+//    std::tuple<int, double> result = Square(2, 4.0);
+//    std::cout << std::fixed << std::setprecision(4);
+//    //访问tuple中的元素：
+//    std::cout << std::get<0>(result) << ',' << std::get<1>(result) << std::endl;
+//    std::cin.get();
+//    return 0;
+//}
+
+
+//pair只可以包含两个不同类型的数据
+//std::pair<int, double> Square(int a, double b)
+//{
+//    int x = a * a;
+//    double y = b * b;
+//    return std::make_pair(x, y);
+//}
+//
+//int main()
+//{
+//    std::pair<int, double> result = Square(2, 4.0);
+//    std::cout << std::fixed << std::setprecision(4);
+//    //访问pair中的元素：
+//    //std::cout << std::get<0>(result) << ',' << std::get<1>(result) << std::endl;
+//    std::cout << result.first << ',' << result.second << std::endl;
+//    std::cin.get();
+//    return 0;
+//}
+
+//  4>使用结构体：
+//#include<iostream>
+//#include<iomanip>
+//struct math
+//{
+//    int x;
+//    double y;
+//};
+// 
+//struct math Square(int a, double b)
+//{
+//    int x = a * a;
+//    double y = b * b;
+//    struct math m = { x,y };
+//    return m;
+//}
+//
+//int main()
+//{
+//    struct math result = Square(2, 4.0);
+//    std::cout << std::fixed << std::setprecision(4);
+//    std::cout << result.x << ',' << result.y << std::endl;
+//    std::cin.get();
+//    return 0;
+//}
+
+
+//  补充：结构化绑定（C++17引入）：可以对tuple,pair,数组和自定义结构体使用
+//#include<iostream>
+//#include<tuple>
+//#include<iomanip>
+//std::tuple<int,double> Square(int a, double b)
+//{
+//    int x = a * a;
+//    double y = b * b;
+//    return std::make_tuple(x, y);
+//}
+//
+//int main()
+//{
+//    std::tuple<int, double> result = Square(2, 4.0);
+//    std::cout << std::fixed << std::setprecision(4);
+//    //***结构化绑定：
+//    auto [x, y] = result;
+//    //访问tuple中的元素：
+//    std::cout << x << ',' << y << std::endl;
+//    std::cin.get();
+//    return 0;
+//}
+
+
+
+//2.27
+//1.模板（template）:
 
