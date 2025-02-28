@@ -1605,6 +1605,88 @@
 
 
 
-//2.27
-//1.模板（template）:
+//2.28
+//1.模板（template）:（元编程）
+//实际上并不存在，只有当它被调用时才创建
+
+//#include<iostream>
+//1>减少重载类似的代码：
+//template<typename T>
+//void Print(T value)
+//{
+//    std::cout << value << std::endl;
+//}
+//int main()
+//{
+//    //隐式：
+//    Print(5);
+//    //显式：
+//    Print<int>(5);
+//
+//    Print(5.5f);
+//    Print("lyl");
+//    std::cin.get();
+//    return 0;
+//}
+
+
+//2>
+//template<typename T, int N>
+//class Array
+//{
+//private:
+//    T array[N];
+//public:
+//    void GetSize()
+//    {
+//        std::cout << N << std::endl;
+//    }
+//};
+//int main()
+//{
+//    Array<int, 5> array;
+//    Array<std::string, 50> string;
+//    std::cin.get();
+//    return 0;
+//}
+
+
+//2.宏：
+//实际应用中，想要一些代码只在Debug模式下运行，而在Release模式下不运行
+//在项目-属性-c/c++ -预处理器-预处理器定义中定义Debug/Debug=1 
+//#include<iostream>
+
+//#ifdef Debug
+//#define Log(x) std::cout<<x<<std::endl
+//#else
+//#define Log(x)
+//#endif
+
+//#define Debug 0
+
+//#if Debug==1
+//#define Log(x) std::cout<<x<<std::endl
+//#else
+//#define Log(x)
+//#endif
+//
+//int main()
+//{
+//    Log("lyl");
+//    return 0;
+//}
+
+//宏必须写在一行，可以使用转义字符 \ 换行
+//#include<iostream>
+//#define Main int main()\
+//{\
+//     std::cin.get();\
+//     return 0;\
+//}
+//Main
+
+
+
+//3.auto关键字：用于自动推导变量的类型-->用于变量类型太长的情况
+
 
