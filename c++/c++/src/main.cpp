@@ -1688,5 +1688,85 @@
 
 
 //3.auto关键字：用于自动推导变量的类型-->用于变量类型太长的情况
+//1>
+//#include<iostream>
+//#include<vector>
+//int main()
+//{
+//    std::vector<std::string> strings;
+//    strings.push_back("Apple");
+//    strings.push_back("Orange");
+//    //迭代器(iterator)：类似指针的作用和用法
+//    //begin()返回一个迭代器，指向第一个元素，end()返回一个迭代器，指向最后一个元素的下一个位置
+//
+//    /*for (std::vector<std::string>::iterator it = strings.begin(); it != strings.end(); it++)
+//    {
+//        std::cout << *it << std::endl;
+//    }*/
+//    for (auto it = strings.begin(); it != strings.end(); it++)
+//    {
+//        std::cout << *it << std::endl;
+//    }
+//    std::cin.get();
+//    return 0;
+//}
 
+
+//2>
+//#include<iostream>
+//#include<unordered_map>
+//#include<vector>
+////std::unordered_map<,> 键值对【集合】->类似数组
+////用于存储键值对,基于哈希表实现
+////通过键可以快速找到对应的值
+//class Device{};
+//class DeviceManager
+//{
+//private:
+//    std::unordered_map<std::string, std::vector<Device*>> m_Devices;
+//public:
+//    const std::unordered_map<std::string, std::vector<Device*>>& GetDevice() const
+//    {
+//        return m_Devices;
+//    }
+//};
+//int main()
+//{
+//    DeviceManager dev;
+//    //const std::unordered_map<std::string, std::vector<Device*>>& device = dev.GetDevice();
+//    const auto& device = dev.GetDevice();
+//    //auto默认会忽略引用的性质，直接推导出引用所指向的原始类型
+//    //需要时要显式加上引用&
+//    std::cin.get();
+//    return 0;
+//}
+
+
+//3.1
+//1.函数指针：返回值（* 函数指针名）（参数）
+//#include<iostream>
+//#include<vector>
+//
+//void PrintValue(int value)
+//{
+//    std::cout << value << std::endl;
+//}
+//
+//void ForEach(std::vector<int> values, void(*fuc)(int))
+//{
+//    for (int value : values)
+//        fuc(value);
+//}
+//
+//int main()
+//{
+//    std::vector<int> values = { 1,2,3,4,5 };
+//    ForEach(values, PrintValue);
+//    std::cin.get();
+//    return 0;
+//}
+
+
+
+//2.lambda函数/匿名函数：一次性函数，用完即废
 
