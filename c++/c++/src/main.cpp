@@ -1747,6 +1747,7 @@
 //#include<iostream>
 //#include<vector>
 //
+//using namespace std;
 //void PrintValue(int value)
 //{
 //    std::cout << value << std::endl;
@@ -1768,5 +1769,161 @@
 
 
 
-//2.lambda函数/匿名函数：一次性函数，用完即废
+//2.lamda函数：类似于匿名函数，便于随用随定义，不用到其他地方去定义个函数
+//格式：[](){} 
+//格式：[外层变量传入](参数变量传入) -> 返回类型 { 函数体 }; 
+//(->返回变量可以不写，因为很容易从return推断)
+//[](=表示对所有变量进行传值传递，&表示对所有变量进行传址传递）
+//#include<iostream>
+//#include<vector>
+//#include<functional>  //std::function的头文件
+
+//1>
+//std::function 提供了一种统一的方式来调用不同的可调用对象
+//void ForEach(std::vector<int> values, std::function<void(int)> fuc)
+//{
+//    for (int value : values)
+//        fuc(value);
+//}
+//
+//int main()
+//{
+//    std::vector<int> values = { 1,2,3,4,5 };
+//    ForEach(values, [](int value) { std::cout << value << std::endl; });
+//    //int a = 5;
+//    //ForEach(values, [=](int value) mutable { a = 10; std::cout << value << a << std::endl; });
+//    ////传值传递不能修改变量的值-->使用mutable解决
+//    std::cin.get();
+//    return 0;
+//}
+
+//2>
+//#include<algorithm>  //std::find_if()的头文件
+
+//std::find_if 是一个通用的查找算法，
+//用于在容器（如 std::vector、std::list、std::array 等）中查找满足特定条件的【第一个】元素
+//它接受一个范围（通过迭代器指定）和一个谓词，返回一个迭代器
+//谓词一个接受单个参数的可调用对象，返回一个布尔值，如果返回 true，则表示当前元素满足条件
+
+//int main()
+//{
+//    std::vector<int> values = { 1,2,3,4,5 };
+//    auto it = std::find_if(values.begin(), values.end(), [](int value) {return value > 3; });
+//    std::cout << *it << std::endl;
+//    return 0;
+//}
+
+
+
+//3.2
+//1.名称空间：避免命名冲突
+//类本身也是一种命名空间，使用静态函数时要类名::
+//注意：尽量不使用using namespace std; 可以对自己的库使用或在小范围的作用域内
+//！！！！绝对不要在头文件中使用using namespace std; 头文件被包含时，会造成重大错误
+//#include<iostream>
+//#include<string>
+//namespace Apple
+//{
+//    void print(std::string text)
+//    {
+//        std::cout << text << std::endl;
+//    }
+//}
+//
+//namespace Orange
+//{
+//    void print(const char* text)
+//    {
+//        std::string tmp = text;
+//        std::reverse(tmp.begin(), tmp.end());
+//        std::cout << tmp << std::endl;
+//    }
+//}
+//using namespace Apple;
+//using namespace Orange;
+//
+//int main()
+//{
+//    print("hello");  //"hello"本身是const char* 类型，调用Apple::print()时发生了隐式转换
+//    std::cin.get();
+//    return 0;
+//}
+
+//#include<iostream>
+////命名空间的嵌套
+//namespace Apple 
+//{
+//    namespace function 
+//    {
+//        void print(const char* text)
+//        {
+//            std::cout << text << std::endl;
+//        }
+//    }
+//
+//    void print_again()
+//    {
+//        ;
+//    }
+//}
+//int main()
+//{
+//    //Apple::function::print("hello");
+//    
+//    //using namespace Apple;
+//    //function::print("hello");
+//
+//    //using namespace Apple::function;
+//    //print("hello");
+//
+//    //命名空间的赋值
+//    //namespace a = Apple::function;
+//    //a::print("hello");
+//    std::cin.get();
+//    return 0;
+//}
+
+
+
+//2.线程：允许同时进行多项任务
+//#include<iostream>
+//#include<thread>  //命名空间this_thread的头文件
+
+//std::literals::chrono_literals 提供了以下时间单位的字面量操作符：->编译器不支持？
+//h：表示小时（std::chrono::hours）
+//min：表示分钟（std::chrono::minutes）
+//s：表示秒（std::chrono::seconds）
+
+//using namespace std::chrono;  //使用构造函数
+//
+//static bool is_finished = false;
+//
+//void dowork()
+//{
+//    std::cout << "start the thread\n";
+//    std::cout << "the id of thread: " << std::this_thread::get_id() << std::endl;
+//    while (!is_finished)
+//    {
+//        std::cout << "working..." << std::endl;
+//        std::this_thread::sleep_for(seconds(1));
+//    }
+//}
+//
+//int main()
+//{
+//    std::thread worker(dowork);
+//    std::cin.get();
+//    is_finished = true;
+//
+//    //调用join的线程会阻塞，直到目标线程（worker）结束
+//    worker.join();
+//    std::cout << "finish the thread\n";
+//    std::cout << "the id of the thread:" << std::this_thread::get_id() << std::endl;
+//    std::cin.get();
+//    return 0;
+//}
+
+
+
+//3.3
 
