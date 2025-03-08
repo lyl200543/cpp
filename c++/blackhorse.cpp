@@ -647,3 +647,386 @@
 
 
 //9>静态成员：
+//静态成员变量：
+//所有对象共享一份数据
+//在编译阶段分配内存
+//类内声明，类外初始化
+
+//#include<iostream>
+//using namespace std;
+//class Person
+//{
+//public:
+//	static int m_a;  //类内声明
+//};
+//
+////类外初始化
+//int Person::m_a = 10;
+//
+//void test1()
+//{
+//	//共享一份数据
+//	/*Person p;
+//	cout << p.m_a << endl;
+//	Person p2;
+//	p2.m_a = 30;
+//	cout << p.m_a << endl;*/
+//}
+//
+//void test2()
+//{
+//	//1.通过类对象访问静态成员变量
+//	Person p;
+//	cout << p.m_a << endl;
+//	//2.通过类名访问静态成员变量
+//	cout << Person::m_a << endl;
+//}
+//int main()
+//{
+//	test1();
+//	test2();
+//	return 0;
+//}
+
+
+//静态成员函数：
+//所有对象共享一个函数
+//静态成员函数只能访问静态成员变量
+
+//#include<iostream>
+//using namespace std;
+//class Person
+//{
+//public:
+//	static int m_a;
+//	int m_b;
+//	static void func()
+//	{
+//		m_a = 10;
+//		//m_b = 10;    //非静态成员引用必须与特定对象相对
+//		cout << "func()函数调用" << endl;
+//	}
+//};
+//
+//int Person::m_a = 0;
+//
+//int main()
+//{
+//	//1.通过类对象访问静态成员函数
+//	Person p;
+//	p.func();
+//	//2.通过类名访问静态成员函数
+//	Person::func();
+//	return 0;
+//}
+
+
+
+//3.c++对象模型和this指针：
+//1>成员变量和成员函数分开存储：
+//空对象所占内存大小为1字节
+//只有非静态成员变量在类对象上
+
+//#include<iostream>
+//using namespace std;
+//class Person
+//{
+//};
+//
+//class Student
+//{
+//public:
+//	int m_a;  //非静态成员变量在类对象上
+//	static int m_b;   //静态成员变量不在类对象上
+//
+//	void func1()    //非静态成员函数不在类对象上
+//	{ }
+//	static void func2()   //静态成员函数不在类对象上
+//	{ }
+//};
+//void test1()
+//{
+//	Person p;
+//	cout << sizeof(p) << endl;  //1字节
+//	//区分空对象占内存的位置，每个空对象有一个独一无二的内存地址
+//}
+//
+//void test2()
+//{
+//	Student s;
+//	cout << sizeof(s) << endl;    //4字节
+//}
+//
+//int main()
+//{
+//	test1();
+//	test2();
+//	return 0;
+//}
+
+
+//2>this指针：指向某个具体对象的指针
+
+//每一个非静态成员函数只会诞生一个函数实例，也就是说多个同类型的对象会共用一块代码
+//这一块代码通过this指针判断是哪一个对象调用函数
+//this指针指向被调用的成员函数所属的对象
+
+//this指针是隐含在每一个非静态成员函数内的一种指针
+//this指针不需要定义，直接使用就行
+
+
+//*1.解决名字冲突问题
+//#include<iostream>
+//class Person
+//{
+//public:
+//	int age;
+//	Person(int age)/*:age(age)*/
+//	{
+//		//age = age;    //名称相同，编译器认为都是形参，没有给成员属性赋值
+//		this->age = age;   //成员初始化列表也可以解决
+//	}
+//};
+//using namespace std;
+//int main()
+//{
+//	Person p(19);
+//	cout << p.age << endl;
+//	return 0;
+//}
+
+
+//*2.在成员函数中返回对象本身（return *this） --》链式编程
+//#include<iostream>
+//using namespace std;
+//class Person
+//{
+//public:
+//	int age;
+//	Person(int age)
+//	{
+//		this->age = age;
+//	}
+//	//注意：返回时一定要返回引用，不然返回的是该对象的拷贝对象
+//	//不是该对象，无法实现链式编程
+//	Person& Add(Person& p)
+//	{
+//		age += p.age;
+//		return *this;
+//	}
+//};
+//int main()
+//{
+//	Person p1(10);
+//	Person p2(10);
+//	//链式编程
+//	p1.Add(p2).Add(p2).Add(p2);  
+//	//返回Person& -->40
+//	//返回Person -->20
+//	cout << p1.age << endl;
+//	return 0;
+//}
+
+
+
+//3>空指针访问成员函数:
+//C++中空指针是可以调用成员函数的,但要注意到有无this指针的情况
+
+//#include<iostream>
+//using namespace std;
+//class Person
+//{
+//public:
+//	int age;
+//	//该函数正常调用
+//	void PrintClassName()  
+//	{
+//		cout << "Person" << endl;
+//	}
+//	//该函数报错
+//	//因为使用成员变量时:age  -->实际上:  this->age  
+//	//使用了this指针,但是this为空指针,故报错
+//	void PrintAge()
+//	{
+//		//增加代码健壮性
+//		if (this == NULL)
+//			return;
+//
+//		cout << age << endl;   //报错:this是空指针
+//	}
+//};
+//int main()
+//{
+//	Person* p = NULL;
+//	//p->PrintClassName();
+//	p->PrintAge();
+//	return 0;
+//}
+
+
+
+//4>const修饰成员函数:
+//常函数:成员函数后加const
+//常函数内不能修改成员属性
+//成员属性加上mutable关键字修饰后,常函数内也可以修改
+
+//常对象:对象前加const
+//常对象只能调用常函数
+
+//#include<iostream>
+//using namespace std;
+//class Person
+//{
+//public:
+//	int m_a;
+//	mutable int m_b;
+//	//this指针实质上是指针常量,本例中为 Person* const this
+//	//this的指向不能修改
+//	//成员函数加上const修饰后:指针变为 const Person* const this
+//	//即指针指向的值也不能修改,而 m_a == this->m_a,故不能修改
+//	void func1() const
+//	{
+//		//m_a = 10;   //不可以修改
+//		m_b = 10;   //可以修改
+//	}
+//	void func2()
+//	{
+//		m_a = 10;
+//	}
+//};
+//int main()
+//{
+//	//常对象只能调用常成员函数
+//	//因为普通成员函数能修改成员属性,常对象调用就能修改成员属性
+//	//而常对象不能修改成员属性
+//	const Person p;
+//	//p.m_a = 10;   //报错:表达式必须是可修改的左值
+//	p.m_b = 10;
+//	p.func1();
+//	//p.func2();   //报错
+//	return 0;
+//}
+
+
+
+//4.友元:
+// 目的:让一个函数或类访问另一个类中的私有属性
+// 关键字:friend
+
+//1>全局函数做友元:
+//在类中用friend修饰要访问私有属性的全局函数的声明
+
+//#include<iostream>
+//using namespace std;
+//class Building
+//{
+//	//友元
+//	friend void GoodGay(Building& building);
+//
+//private:
+//	string m_bedroom;
+//public:
+//	string m_settingroom;
+//	Building(string settingroom, string bedroom) :m_settingroom(settingroom), m_bedroom(bedroom)
+//	{
+//		;
+//	}
+//};
+//
+//void GoodGay(Building& building)
+//{
+//	cout << "好基友全局函数正在访问: " << building.m_settingroom << endl;
+//	cout << "好基友全局函数正在访问: " << building.m_bedroom << endl;   //报错
+//}
+//int main()
+//{
+//	Building building("客厅", "卧室");
+//	GoodGay(building);
+//	return 0;
+//}
+
+
+//2>类做友元:
+
+//#include<iostream>
+//#include<string>
+//using namespace std;
+//
+//class Building;
+//
+//class GoodGay
+//{
+//public:
+//	Building* building;
+//	GoodGay();
+//	void visit();
+//	~GoodGay();
+//};
+//
+//class Building
+//{
+//	friend class GoodGay;
+//private:
+//	string m_bedroom;
+//public:
+//	string m_settingroom;
+//	Building();
+//};
+//
+////成员函数可以在类外定义
+//GoodGay::GoodGay()
+//{
+//	//******* new分配内存，同时调用对象的构造函数来初始化这块内存
+//	building = new Building;
+//}
+//
+//Building::Building()
+//{
+//	m_settingroom = "客厅";
+//	m_bedroom = "卧室";
+//}
+//
+//void GoodGay::visit()
+//{
+//	cout << "好基友类正在访问: " << building->m_settingroom << endl;
+//	cout << "好基友类正在访问: " << building->m_bedroom << endl;
+//}
+//
+//GoodGay::~GoodGay()
+//{
+//	delete building;
+//}
+//
+//int main()
+//{
+//	GoodGay gg;
+//	gg.visit();
+//	return 0;
+//}
+
+
+//3>成员函数做友元:
+
+#include<iostream>
+using namespace std;
+int main()
+{
+	return 0;
+}
+
+
+
+//5.运算符重载:
+
+
+
+//6.继承:
+
+
+
+//7.多态:
+
+
+
+//五.文件操作:
+
