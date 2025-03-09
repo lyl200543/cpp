@@ -1007,16 +1007,319 @@
 
 //3>成员函数做友元:
 
-#include<iostream>
-using namespace std;
-int main()
-{
-	return 0;
-}
+//#include<iostream>
+//using namespace std;
+//class Building;
+//class GoodGay
+//{
+//public:
+//	Building* building;
+//	GoodGay();
+//	void visit();
+//	void visit2();
+//	~GoodGay();
+//};
+//
+//class Building
+//{
+//	//告诉编译器，GoodGay下的visit()函数是我的好朋友，可以访问我的私有成员属性
+//	friend void GoodGay::visit();
+//
+//private:
+//	string m_bedroom;
+//public:
+//	string m_settingroom;
+//	Building();
+//};
+//
+//Building::Building()
+//{
+//	m_settingroom = "客厅";
+//	m_bedroom = "卧室";
+//}
+//
+//GoodGay::GoodGay()
+//{
+//	building = new Building;
+//}
+//
+//GoodGay::~GoodGay()
+//{
+//	delete building;
+//}
+//
+//void GoodGay::visit()
+//{
+//	cout << "visit 函数正在访问： " << building->m_settingroom << endl;
+//	cout << "visit 函数正在访问： " << building->m_bedroom << endl;
+//	
+//}
+//
+//void GoodGay::visit2()
+//{
+//	cout << "visit2 函数正在访问： " << building->m_settingroom << endl;
+//	//cout << "visit 函数正在访问： " << building->m_bedroom << endl;
+//}
+//int main()
+//{
+//	GoodGay gg;
+//	gg.visit();
+//	gg.visit2();
+//	return 0;
+//}
 
 
 
 //5.运算符重载:
+//对已有运算符重新进行定义，赋予其另一种功能，使其使用不同的数据类型
+
+//1>加号（+）运算符重载：
+
+//#include<iostream>
+//using namespace std;
+//class Person
+//{
+//public:
+//	int m_a;
+//	int m_b;
+//	//通过成员函数重载+号：
+//	/*Person operator+(Person& p)
+//	{
+//		Person tmp;
+//		tmp.m_a = this->m_a + p.m_a;
+//		tmp.m_b = this->m_b + p.m_b;
+//		return tmp;
+//	}*/
+//};
+//
+////通过全局函数重载+号：
+//Person operator+(Person& p1, Person& p2)
+//{
+//	Person tmp;
+//	tmp.m_a = p1.m_a + p2.m_a;
+//	tmp.m_b = p1.m_b + p2.m_b;
+//	return tmp;
+//}
+//
+////函数重载：
+//Person operator+(Person& p, int n)
+//{
+//	Person tmp;
+//	tmp.m_a = p.m_a + n;
+//	tmp.m_b = p.m_b + n;
+//	return tmp;
+//}
+//
+//int main()
+//{
+//	Person p1;
+//	p1.m_a = 10;
+//	p1.m_b = 10;
+//	Person p2;
+//	p2.m_a = 20;
+//	p2.m_b = 20;
+//
+//	//简化版：
+//	//Person p3 = p1 + p2;
+//	
+//	//通过成员函数重载+号的本质：
+//	//Person p3 = p1.operator+(p2);
+//
+//    //通过全局函数重载+号的本质：
+//	//Person p3 = operator+(p1, p2);
+//	
+//
+//	//运算符重载 也能发生函数重载
+//	Person p3 = p1 + 100;
+//	//Person p3 = 100 + p1;    //没有与这些操作数匹配的 "+" 运算符
+//	//*********注意：重载运算符左右操作数必须严格与函数参数一一对应！！！！
+//
+//	cout << p3.m_a << " " << p3.m_b << endl;
+//	return 0;
+//}
+
+
+
+//2>左移（<<）运算符重载：输出自定义类型
+//std::cout 是 std::ostream 类的一个实例
+
+//重载<<运算符不能通过成员函数：
+//<< 运算符的第一个参数必须是 std::ostream& 类型
+//而类的成员函数的第一个参数总是隐式的 this 指针
+//cout<<p -->本质：cout.operator<<(class& p) 或 operator<<(ostream& cout,class& p)
+
+//要实现链式调用：必须返回ostream&
+
+//#include<iostream>
+//using namespace std;
+//class Person
+//{
+//	friend ostream& operator<<(ostream& cout, Person& p);
+//private:
+//	int m_a;
+//	int m_b;
+//public:
+//	Person(int a, int b) :m_a(a), m_b(b) { ; }
+//
+//	/*ostream& operator<<(ostream& cout)
+//	{
+//		cout << m_a << " " << m_b << endl;
+//		return cout;
+//	}*/
+//};
+//
+//ostream& operator<<(ostream& cout, Person& p)
+//{
+//	cout << p.m_a << " " << p.m_b;
+//	return cout;
+//}
+//
+//int main()
+//{
+//	Person p(1, 2);
+//	cout << p << endl;
+//	//使用成员函数：
+//	//p << cout << endl;
+//	return 0;
+//}
+
+
+//3>递增（++）运算符重载：
+
+//#include<iostream>
+//using namespace std;
+//class MyInteger
+//{
+//	friend ostream& operator<<(ostream& cout, MyInteger m);
+//private:
+//	int m_int;
+//public:
+//	MyInteger()
+//	{
+//		m_int = 0;
+//	}
+//
+//	//前置++
+//	//必须返回ClassName& 才能实现链式编程 ++（++m）
+//	MyInteger operator++()
+//	{
+//		m_int++;
+//		return *this;
+//	}
+//
+//	//后置++
+//	//int为占位参数，是编译器设置用来区分前置和后置的
+//	//后置返回值，不能链式编程
+//	MyInteger operator++(int)
+//	{
+//		MyInteger tmp = *this;
+//		m_int++;
+//		return tmp;
+//	}
+//
+//	//递减操作符：
+//	MyInteger& operator--()
+//	{
+//		m_int--;
+//		return *this;
+//	}
+//
+//	MyInteger operator--(int)
+//	{
+//		MyInteger tmp = *this;
+//		m_int--;
+//		return tmp;
+//	}
+//};
+//
+//ostream& operator<<(ostream& cout, MyInteger m)
+//{
+//	cout << m.m_int;
+//	return cout;
+//}
+//
+//int main()
+//{
+//	MyInteger m;
+//	//cout << ++(++m) << endl;
+//	//cout << m << endl;
+//	//cout << (m++)++ << endl;
+//	//cout << m << endl;
+//	//cout << --(--m) << endl;
+//	cout << m-- << endl;
+//	cout << m << endl;
+//	return 0;
+//}
+
+
+
+//4>赋值（=）运算符重载：
+//c++编译器至少给一个类添加4个函数：
+//默认构造函数（无参，函数体为空）
+//默认析构函数（无参，函数体为空）
+//默认拷贝构造函数，为值拷贝（浅拷贝）
+//赋值运算符重载（operator=），为值拷贝（浅拷贝）
+//当成员属性包含堆中创建的变量时，赋值操作会导致堆中同一块空间被释放两次
+
+//一旦成员属性中包含堆中创建的变量时：
+//拷贝构造函数和赋值运算符重载函数都要自己定义——>变为深拷贝
+
+//#include<iostream>
+//using namespace std;
+//class Person
+//{
+//public:
+//	int* m_age;
+//	Person(int age)
+//	{
+//		m_age = new int(age);
+//	}
+//	~Person()
+//	{
+//		if (m_age != NULL)
+//		{
+//			delete m_age;
+//			m_age = NULL;
+//		}
+//	}
+//
+//	//重载运算符=
+//	Person& operator= (Person& p)
+//	{
+//		//*******释放之前分配的空间
+//		delete m_age;
+//		m_age = NULL; 
+//
+//		//重新分配空间并拷贝值
+//		m_age = new int(*p.m_age);
+//		return *this;
+//	}
+//};
+//
+//int main()
+//{
+//	Person p1(18);
+//	Person p2(20);
+//	Person p3(30);
+//
+//	//拷贝构造函数和operator=的区别：
+//	//Person p4(p1); -->调用的是拷贝构造函数
+//	//Person p4(40);  p4=p1;  -->调用的是赋值运算符
+//
+//	p3 = p2 = p1;
+//	cout << *p1.m_age << " " << *p2.m_age << " " << *p3.m_age << endl;
+//	return 0;
+//}
+
+
+
+//5>关系运算符重载：
+
+
+
+
+//6>函数调用运算符重载：
+
 
 
 
