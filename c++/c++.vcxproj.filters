@@ -18,7 +18,7 @@
     <ClCompile Include="src\cherno.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="blackhorse.cpp">
+    <ClCompile Include="bh.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="point.h">

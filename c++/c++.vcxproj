@@ -149,7 +149,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="blackhorse.cpp" />
+    <ClCompile Include="bh.cpp" />
     <ClCompile Include="circle.cpp" />
     <ClCompile Include="point.cpp" />
     <ClCompile Include="point.h" />
