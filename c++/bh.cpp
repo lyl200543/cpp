@@ -1971,7 +1971,364 @@
 
 //2>多态的原理刨析：
 
+//#include<iostream>
+//using namespace std;
+//class Animals
+//{
+//public:
+//	virtual void Speak()
+//	{
+//		cout << "动物在说话" << endl;
+//	}
+//};
+//
+//class Cat : public Animals
+//{
+//public:
+//	void Speak()
+//	{
+//		cout << "小猫在说话" << endl;
+//	}
+//};
+//
+//void DoSpeak(Animals& animal)   
+//{
+//	animal.Speak();
+//}
+//
+//int main()
+//{
+//	//Animals类中的speak()函数：
+//	//没加vitual关键字：大小为1字节
+//	//加vitual关键字：大小为4/8字节（x64/x86）-->产生了一个指针
+//	cout << sizeof(Animals) << endl;  
+//
+//	return 0;
+//}
 
+
+//没加vitual:
+//class Animals   size(1) :
+//	+-- -
+//	+-- -
+
+//加vitual:
+//class Animals   size(4) :
+//	+-- -
+//	0 | {vfptr}
+//+ -- -
+//
+//Animals::$vftable@ :
+//	| &Animals_meta
+//	| 0
+//	0 | &Animals::Speak
+//
+//	Animals::Speak this adjustor : 0
+
+//函数 F 变为虚函数后，会生成一个虚函数（表）指针 vfptr,指向该类 A 的虚函数表 vftable
+//虚函数表 vftable 中存放了该类 A 作用域下的函数 F 地址
+//当该类 A 的子类 B 没有重写函数 F 时：子类 B 继承 A 类的 vfptr 指针
+//并指向子类 B 自己的虚函数表 vftable ，里面存放的是类 A 作用域下的函数 F 地址
+//当 B 类重写函数 F 时：继承的 vfptr 指针指向子类 B 自己的虚函数表 vftable 
+//但是里面存放的是 B 类作用域下的函数 F 地址
+
+
+
+//3>多态案例一：计算类
+
+//#include<iostream>
+//#include<string>
+//using namespace std;
+//
+////普通写法：
+//class Calculator
+//{
+//public:
+//	int m_num1;
+//	int m_num2;
+//
+//	int GetResult(string oper)
+//	{
+//		if (oper == "+")
+//			return m_num1 + m_num2;
+//		else if (oper == "-")
+//			return m_num1 - m_num2;
+//		else if (oper == "*")
+//			return m_num1 * m_num2;
+//		//如果想扩展新功能，需要修改源代码
+//		//在实际开发中，提倡开闭原则
+//		//开闭原则：对扩展进行开放，对修改进行关闭
+//	}
+//};
+//
+//void test01()
+//{
+//	Calculator c;
+//	c.m_num1 = 10;
+//	c.m_num2 = 10;
+//	cout << c.GetResult("+") << endl;
+//	cout << c.GetResult("-") << endl;
+//	cout << c.GetResult("*") << endl;
+//}
+//
+//
+////多态写法：
+////好处：代码组织结构清晰，可读性强，利于前期和后期的维护
+//
+////抽象类
+//class AbstractCalculator
+//{
+//public:
+//	int m_num1;
+//	int m_num2;
+//
+//	virtual int GetResult()
+//	{
+//		return 0;
+//	}
+//};
+//
+////加法类
+//class AddCalculator :public AbstractCalculator
+//{
+//public:
+//    int GetResult()
+//	{
+//		return m_num1 + m_num2;
+//	}
+//};
+//
+////减法类
+//class SubCalculator :public AbstractCalculator
+//{
+//public:
+//	int GetResult()
+//	{
+//		return m_num1 - m_num2;
+//	}
+//};
+//
+////乘法类
+//class MulCalculator :public AbstractCalculator
+//{
+//public:
+//	int GetResult()
+//	{
+//		return m_num1 * m_num2;
+//	}
+//};
+//
+//void test02()
+//{
+//	AbstractCalculator* abc = new AddCalculator;
+//	abc->m_num1 = 10;
+//	abc->m_num2 = 10;
+//	cout << abc->GetResult() << endl;
+//	delete abc;
+//
+//	abc = new SubCalculator;
+//	abc->m_num1 = 10;
+//	abc->m_num2 = 10;
+//	cout << abc->GetResult() << endl;
+//	delete abc;
+//
+//	abc = new MulCalculator;
+//	abc->m_num1 = 10;
+//	abc->m_num2 = 10;
+//	cout << abc->GetResult() << endl;
+//	delete abc;
+//}
+//int main()
+//{
+//	//test01();
+//	test02();
+//	return 0;
+//}
+
+
+
+//4>纯虚函数和抽象类：-->规范使用多态
+
+//#include<iostream>
+//using namespace std;
+//class Base
+//{
+//public:
+//	//纯虚函数
+//	virtual void Func() = 0;
+//	//含有纯虚函数的类叫作抽象类
+//	//抽象类的特点：
+//	//1.抽象类不能实例化对象
+//	//2.抽象类的子类必须重写纯虚函数，否则也不能实例化对象
+//};
+//
+//class Son :public Base
+//{
+//public:
+//	void Func()
+//	{
+//		cout << "Func()函数调用" << endl;
+//	}
+//};
+//int main()
+//{
+//	//Base b;
+//	//Base* b = new Base;
+//	Base* b = new Son;
+//	b->Func();
+//	return 0;
+//}
+
+
+
+//5>多态案例二：制作饮品
+
+//#include<iostream>
+//using namespace std;
+//class AbstractDrinking
+//{
+//public:
+//	virtual void Boil() = 0;
+//	virtual void Brew() = 0;
+//	virtual void PourInCap() = 0;
+//	virtual void AddSomething() = 0;
+//	void MakingDrink()
+//	{
+//		Boil();
+//		Brew();
+//		PourInCap();
+//		AddSomething();
+//	}
+//};
+//
+//class Coffee :public AbstractDrinking
+//{
+//public:
+//	void Boil()
+//	{
+//		cout << "煮农夫山泉" << endl;
+//	}
+//	void Brew()
+//	{
+//		cout << "冲泡咖啡" << endl;
+//	}
+//	void PourInCap()
+//	{
+//		cout << "倒入玻璃杯中" << endl;
+//	}
+//	void AddSomething()
+//	{
+//		cout << "加牛奶" << endl;
+//	}
+//};
+//
+//class Tea :public AbstractDrinking
+//{
+//public:
+//	void Boil()
+//	{
+//		cout << "煮百岁山" << endl;
+//	}
+//	void Brew()
+//	{
+//		cout << "冲泡茶叶" << endl;
+//	}
+//	void PourInCap()
+//	{
+//		cout << "倒入红酒杯中" << endl;
+//	}
+//	void AddSomething()
+//	{
+//		cout << "加枸杞" << endl;
+//	}
+//};
+//
+//void DoWork(AbstractDrinking* abd)
+//{
+//	abd->MakingDrink();
+//	delete abd;
+//}
+//
+//int main()
+//{
+//	DoWork(new Coffee);
+//	cout << "--------------------" << endl;
+//	DoWork(new Tea);
+//	return 0;
+//}
+
+
+
+//6>虚析构和纯虚析构(?)：
+//多态使用时，如果子类有属性开辟到堆区，那么父类指针在释放时无法调用到子类的析构代码，造成内存泄露
+//解决方法：使用虚析构或纯虚析构
+//共性：可以解决父类指针释放子类；都要有具体的函数实现
+//差异：如果是纯虚析构函数，该类属于抽象类，无法实例化对象
+
+//总结：只有子类中有堆区数据存在时，才需要写虚析构和纯虚析构
+
+//#include<iostream>
+//using namespace std;
+//class Animal
+//{
+//public:
+//	virtual void speak() = 0;
+//	Animal()
+//	{
+//		cout << "Animal构造函数调用 " << endl;
+//	}
+//
+//	//虚析构函数：
+//	/*virtual*/ ~Animal()
+//	{
+//		cout << "Animal虚析构函数调用 " << endl;
+//	}
+//
+//	//纯虚析构函数：
+//	//virtual ~Animal() = 0;   //声明
+//};
+//
+////实现
+////Animal::~Animal()
+////{
+////	cout << "Animal纯虚析构函数调用" << endl;
+////}
+//
+//class Cat :public Animal
+//{
+//public:
+//	string* m_name;
+//	void speak()
+//	{
+//		cout << *m_name << "小猫在说话" << endl;
+//	}
+//	Cat(string name)
+//	{
+//		cout << "Cat构造函数调用" << endl;
+//		m_name = new string(name);
+//	}
+//	~Cat()
+//	{
+//		cout << "Cat析构函数调用" << endl;
+//		if (m_name != NULL)
+//		{
+//			delete m_name;
+//			m_name = NULL;
+//		}
+//	}
+//};
+//int main()
+//{
+//	Animal* animal = new Cat("Tom");
+//	animal->speak();
+//	delete animal;
+//
+//	return 0;
+//}
+
+
+
+//7>多态案例三：电脑组装
 
 
 
