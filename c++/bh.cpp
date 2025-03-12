@@ -2330,7 +2330,251 @@
 
 //7>多态案例三：电脑组装
 
+//#include<iostream>
+//using namespace std;
+////抽象类
+//class Cpu
+//{
+//public:
+//	virtual void Calculate() = 0;
+//};
+//
+//class VedioCard
+//{
+//public:
+//	virtual void display() = 0;
+//};
+//
+//class Memory
+//{
+//public:
+//	virtual void Storage() = 0;
+//};
+//
+//
+//class Computer
+//{
+//private:
+//	Cpu* m_cpu;
+//	VedioCard* m_vc;
+//	Memory* m_mem;
+//public:
+//	Computer(Cpu* cpu, VedioCard* vc, Memory* mem)
+//	{
+//		m_cpu = cpu;
+//		m_vc = vc;
+//		m_mem = mem;
+//	}
+//	void Dowork()
+//	{
+//		m_cpu->Calculate();
+//		m_vc->display();
+//		m_mem->Storage();
+//	}
+//	~Computer()
+//	{
+//		cout << "Computer析构函数调用" << endl;
+//		delete m_cpu;
+//		delete m_vc;
+//		delete m_mem;
+//	}
+//};
+//
+////Inter
+//class InterCpu :public Cpu
+//{
+//public:
+//	void Calculate()
+//	{
+//		cout << "Inter的CPU开始计算了" << endl;
+//	}
+//};
+//
+//class InterVedioCard :public VedioCard
+//{
+//public:
+//	void display()
+//	{
+//		cout << "Inter的显卡开始显示了" << endl;
+//	}
+//};
+//
+//class InterMemory:public Memory
+//{
+//public:
+//	void Storage()
+//	{
+//		cout << "Inter的内存条开始存储了" << endl;
+//	}
+//};
+//
+////Lenovo
+//class LenovoCpu :public Cpu
+//{
+//public:
+//	void Calculate()
+//	{
+//		cout << "Lenovo的CPU开始计算了" << endl;
+//	}
+//};
+//
+//class LenovoVedioCard :public VedioCard
+//{
+//public:
+//	void display()
+//	{
+//		cout << "Lenovo的显卡开始显示了" << endl;
+//	}
+//};
+//
+//class LenovoMemory :public Memory
+//{
+//public:
+//	void Storage()
+//	{
+//		cout << "Lenovo的内存条开始存储了" << endl;
+//	}
+//};
+//
+//int main()
+//{
+//	Cpu* interCpu = new InterCpu;
+//	VedioCard* lenovoVC = new LenovoVedioCard;
+//	Memory* intermemory = new InterMemory;
+//	Computer computer(interCpu, lenovoVC, intermemory);
+//	computer.Dowork();
+//	return 0;
+//}
+
+
 
 
 //五.文件操作:
+//*1.包含头文件fstream   *2.创建流对象   *3.打开文件   *4.读写文件   *5.关闭文件
 
+//1.文本文件：
+//1>写文件
+
+//#include<iostream>
+////包含头文件
+//#include<fstream>
+//using namespace std;
+//int main()
+//{
+//	//文件输出流对象
+//	ofstream f;
+//	//打开文件：open("文件路径"，打开方式)
+//	//ios::in(读文件),ios::out（写文件）,ios::ate(初始位置：文件尾)，ios::app(追加方式写文件)
+//	//ios::binary(二进制文件)，ios::trunc(如果文件存在先删除，再创建)
+//	f.open("text.txt", ios::out);
+//	//写文件
+//	f << "我喜欢你" << endl;
+//	f << "明天会更好" << endl;
+//	//关闭文件
+//	f.close();
+//	return 0;
+//}
+
+//2>读文件
+
+//#include<iostream>
+//#include<fstream>
+//#include<string>
+//using namespace std;
+//int main()
+//{
+//	ifstream i;
+//	i.open("text.txt", ios::in);
+//	//判断文件是否打开成功
+//	if (!i.is_open())
+//	{
+//		cout << "文件打开失败" << endl;
+//		return 0;
+//	}
+//
+//	//写文件：
+//	//*1.
+//	/*char buf[1024] = { 0 };
+//	while (i >> buf)
+//	{
+//		cout << buf << endl;
+//	}*/
+//
+//	//*2.
+//	/*char buf[1024] = { 0 };
+//	while (i.getline(buf, sizeof(buf)))
+//	{
+//		cout << buf << endl;
+//	}*/
+//
+//	//*3.
+//	//string buf;
+//	//while (getline(i, buf))   //getline包含在string头文件中
+//	//{
+//	//	cout << buf << endl;
+//	//}
+//
+//	//*4.前面都是一行一行读取，下面是一个字符一个字符读取
+//	char c;
+//	while ((c = i.get()) != EOF)
+//	{
+//		cout << c;
+//	}
+//
+//	i.close();
+//	return 0;
+//}
+
+
+
+//2.二进制文件：
+//1>写文件
+//ostream& write(const char* buffer, int len);
+
+//#include<iostream>
+//#include<fstream>
+//using namespace std;
+//class Person
+//{
+//public:
+//	char m_name[64];
+//	int m_age;
+//};
+//int main()
+//{
+//	//ofstream 有构造函数，可以直接传入路径和打开方式
+//	ofstream ofs("person.txt", ios::out | ios::binary);   //通过 | 可以将不同的打开方式叠加
+//	Person p = { "张三",20 };
+//	ofs.write((const char*)&p, sizeof(Person));
+//	ofs.close();
+//	return 0;
+//}
+
+
+//2>读文件
+//istream& read(char* buffer, int len);
+
+//#include<iostream>
+//#include<fstream>
+//using namespace std;
+//class Person
+//{
+//public:
+//	char m_name[64];
+//	int m_age;
+//};
+//int main()
+//{
+//	ifstream ifs;
+//	ifs.open("person.txt", ios::in | ios::binary);
+//	if (!ifs.is_open())
+//	{
+//		cout << "文件打开失败" << endl;
+//		return 0;
+//	}
+//	Person p;
+//	ifs.read((char*)&p, sizeof(Person));
+//	cout << p.m_name << " " << p.m_age << endl;
+//	ifs.close();
+//	return 0;
+//}
