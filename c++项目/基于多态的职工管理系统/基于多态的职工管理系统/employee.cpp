@@ -1,6 +1,6 @@
 #include<iostream>
 #include"employee.h"
-
+using namespace std;
 Employee::Employee(int id, string name, int Did)
 {
 	this->m_id = id;
@@ -18,5 +18,5 @@ void Employee::ShowInfo()
 
 string Employee::GetDep()
 {
-	return string("普通员工");
+	return string("员工");
 }

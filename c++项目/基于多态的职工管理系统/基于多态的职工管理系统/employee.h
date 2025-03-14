@@ -1,6 +1,6 @@
 #pragma once
 #include"Worker.h"
-
+using namespace std;
 class Employee :public Worker
 {
 public:
