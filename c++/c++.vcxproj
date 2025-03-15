@@ -149,7 +149,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="bh.cpp" />
+    <ClCompile Include="bh_core.cpp" />
+    <ClCompile Include="bh_improve.cpp" />
     <ClCompile Include="circle.cpp" />
     <ClCompile Include="point.cpp" />
     <ClCompile Include="point.h" />

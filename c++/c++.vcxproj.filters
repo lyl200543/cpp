@@ -18,7 +18,7 @@
     <ClCompile Include="src\cherno.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="bh.cpp">
+    <ClCompile Include="bh_core.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="point.h">
@@ -28,6 +28,9 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="circle.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="bh_improve.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
